@@ -13,11 +13,12 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AccountResponse {
+public class LoginResponse {
     private int id;
     private String username;
-    private String password;
-    private String fullname;
+    private String role;
+    private String fullName;
+    private String urlImg;
     private String qrCode;
     private boolean status;
 }

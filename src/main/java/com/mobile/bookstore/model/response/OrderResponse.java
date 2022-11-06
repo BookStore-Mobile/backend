@@ -1,4 +1,4 @@
-package com.mobile.bookstore.response;
+package com.mobile.bookstore.model.response;
 import java.sql.Date;
 
 import lombok.AllArgsConstructor;

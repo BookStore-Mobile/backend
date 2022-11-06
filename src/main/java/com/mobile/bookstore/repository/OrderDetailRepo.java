@@ -1,4 +1,4 @@
-package com.mobile.bookstore.repo;
+package com.mobile.bookstore.repository;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
-package com.swp.hr_backend.model.request;
+package com.mobile.bookstore.model.request;
 
-import javax.validation.constraints.NotEmpty;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,6 +14,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class LoginRequest {
-	@NotEmpty
     private String authToken;
 }

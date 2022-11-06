@@ -1,11 +1,10 @@
-package com.swp.hr_backend.model.request;
-
-import javax.validation.constraints.NotEmpty;
+package com.mobile.bookstore.model.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 
 @Data
@@ -14,9 +13,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CustomLoginRequest {
-    @NotEmpty
+	@NonNull
     private String username;
 
-    @NotEmpty
+    @NonNull
     private String password;
 }
