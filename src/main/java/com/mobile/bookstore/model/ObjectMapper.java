@@ -52,6 +52,7 @@ public class ObjectMapper {
 										.requireDate(order.getRequireDate())
 										.totalPrice(order.getTotalPrice())
 										.totalAmount(order.getTotalAmount())
+										.status(order.isStatus())
 										.build();
 	}
 
@@ -72,6 +73,7 @@ public class ObjectMapper {
 										.requireDate(orderRequest.getRequireDate())
 										.totalPrice(orderRequest.getTotalPrice())
 										.totalAmount(orderRequest.getTotalAmount())
+										.status(orderRequest.isStatus())
 										.build();
 	}
 	
