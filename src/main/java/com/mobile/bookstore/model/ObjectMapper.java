@@ -6,11 +6,14 @@ import java.util.List;
 import com.mobile.bookstore.entity.Account;
 import com.mobile.bookstore.entity.Book;
 import com.mobile.bookstore.entity.Category;
+import com.mobile.bookstore.entity.Order;
 import com.mobile.bookstore.model.request.BookRequest;
+import com.mobile.bookstore.model.request.OrderRequest;
 import com.mobile.bookstore.model.request.SignupRequest;
 import com.mobile.bookstore.model.response.AccountResponse;
 import com.mobile.bookstore.model.response.BookResponse;
 import com.mobile.bookstore.model.response.LoginResponse;
+import com.mobile.bookstore.model.response.OrderResponse;
 
 public class ObjectMapper {
 	public static BookResponse bookToBookResponse(Book book) {
@@ -41,6 +44,35 @@ public class ObjectMapper {
 			return bookResponses;
 		}
 		return null;
+	}
+
+	public static OrderResponse orderToOrderResponse(Order order){
+		return OrderResponse.builder().id(order.getId())
+										.starDate(order.getStarDate())
+										.requireDate(order.getRequireDate())
+										.totalPrice(order.getTotalPrice())
+										.totalAmount(order.getTotalAmount())
+										.build();
+	}
+
+	public static List<OrderResponse> orderToOrderResponses(List<Order> orders){
+		if(orders != null && orders.size() > 0) {
+			List<OrderResponse> orderResponses = new ArrayList<>();
+			for(Order order : orders) {
+				orderResponses.add(orderToOrderResponse(order));
+			}
+			return orderResponses;
+		}
+		return null;
+	}
+
+	public static Order orderRequestToOrder(OrderRequest orderRequest){
+		return Order.builder().id(orderRequest.getId())
+										.starDate(orderRequest.getStarDate())
+										.requireDate(orderRequest.getRequireDate())
+										.totalPrice(orderRequest.getTotalPrice())
+										.totalAmount(orderRequest.getTotalAmount())
+										.build();
 	}
 	
     public static AccountResponse accountToAccountResponse(Account account) {

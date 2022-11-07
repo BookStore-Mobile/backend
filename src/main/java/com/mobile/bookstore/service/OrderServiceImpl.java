@@ -4,37 +4,46 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 
 import com.mobile.bookstore.entity.Order;
+import com.mobile.bookstore.exception.CustomError;
 import com.mobile.bookstore.exception.custom.BaseCustomException;
 import com.mobile.bookstore.exception.custom.CustomNotFoundException;
+import com.mobile.bookstore.exception.custom.CustomUnauthorizedException;
+import com.mobile.bookstore.model.ObjectMapper;
 import com.mobile.bookstore.model.request.OrderRequest;
 import com.mobile.bookstore.repository.OrderRepo;
+import com.mobile.bookstore.utils.AccountRole;
+import com.mobile.bookstore.utils.BookUtil;
 
+import lombok.RequiredArgsConstructor;
+
+
+@Service
+@RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
-    @Autowired
-    OrderRepo orderRepo;
+    private final OrderRepo orderRepo;
+    private final BookUtil bookUtil;
 
     @Override
-    public Order createNewOrder(OrderRequest orderRequest) throws BaseCustomException {
-        Order order = new Order();
-        order.setStarDate(orderRequest.getStarTime());
-        order.setRequireDate(orderRequest.getRequireTime());
-        order.setTotalPrice(orderRequest.getTotalPrice());
-        order.setTotalAmount(orderRequest.getTotalAmount());
-        return order;
-    }
+    public Order addOrder(OrderRequest orderRequest) throws BaseCustomException {
+        if(orderRequest == null) throw new CustomNotFoundException(CustomError.builder().code("400").message("Bad Request").build());
+		if(!bookUtil.checkRoleAccount(AccountRole.Admin, orderRequest.getAccountId())) throw new CustomUnauthorizedException(CustomError.builder().code("401")
+				.message("Access denied, you need to be Admin to do this!").build());
+                Order order = orderRepo.save(ObjectMapper.orderRequestToOrder(orderRequest));
+                if(order != null) {
+                    return ObjectMapper.orderToOrderResponse(order);
+                } else throw new CustomNotFoundException(
+                        CustomError.builder().code("404").message("DB Add Failed!").build());
+        }
 
     @Override
     public List<Order> getAllOrder() {
         return orderRepo.findAll();
     }
 
-    @Override
-    public Order getOrderByID(int id) {
-        return orderRepo.findOrderById(id);
-    }
 
     @Override
     public Order updateOrders(int id, OrderRequest orderRequest) throws BaseCustomException {
@@ -46,8 +55,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private Order updateOrder(Order order, OrderRequest orderRequest) {
-		order.setStarDate(orderRequest.getStarTime());
-        order.setRequireDate(orderRequest.getRequireTime());
+		order.setStarDate(orderRequest.getStarDate());
+        order.setRequireDate(orderRequest.getRequireDate());
         order.setTotalPrice(orderRequest.getTotalPrice());
         order.setTotalAmount(orderRequest.getTotalAmount());
 		return order;
