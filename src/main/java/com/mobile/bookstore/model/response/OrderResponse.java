@@ -1,11 +1,9 @@
 package com.mobile.bookstore.model.response;
 import java.sql.Date;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import org.springframework.lang.Nullable;
+
+import lombok.*;
 
 @Getter
 @Setter
@@ -13,16 +11,16 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 public class OrderResponse {
-
+    @Nullable
     private int id;
-    
+    @NonNull
     private Date starDate;
-    
+    @NonNull
     private Date requireDate;
-   
+   @NonNull
     private double totalPrice;
-    
+    @NonNull
     private int totalAmount;
-   
+   @NonNull
     private boolean status;
 }
